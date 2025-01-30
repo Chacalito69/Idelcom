@@ -1,0 +1,26 @@
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const circles = document.querySelectorAll(".circle");
+    const infoBoxes = document.querySelectorAll(".info-box");
+
+    circles.forEach((circle, index) => {
+      circle.addEventListener("click", () => {
+        // Remover la clase activa de todos los círculos
+        circles.forEach(c => c.classList.remove("active"));
+        circle.classList.add("active");
+
+        // Ocultar todas las cajas de información
+        infoBoxes.forEach(box => {
+          box.classList.remove("active");
+          box.style.opacity = "0";
+        });
+
+        // Mostrar la caja de información correspondiente
+        setTimeout(() => {
+          infoBoxes[index].classList.add("active");
+          infoBoxes[index].style.opacity = "1";
+        }, 300);
+      });
+    });
+  });
+</script>
