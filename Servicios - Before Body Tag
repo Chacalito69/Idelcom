@@ -1,0 +1,108 @@
+<div class="interactive-section">
+  <!-- Contenedor de los círculos -->
+  <div class="circles-container">
+    <div class="circle active" data-index="0">
+      <img src="https://cdn.prod.website-files.com/673c9e44ffc846edd50ea2ba/6760b25f0228823e5a9c7abf_BUILDING%20VECTOR_black.svg" alt="Edificio">
+    </div>
+    <div class="circle" data-index="1">
+      <img src="https://cdn.prod.website-files.com/673c9e44ffc846edd50ea2ba/6760b25f0228823e5a9c7abf_BUILDING%20VECTOR_black.svg" alt="Edificio">
+    </div>
+    <div class="circle" data-index="2">
+      <img src="https://cdn.prod.website-files.com/673c9e44ffc846edd50ea2ba/6760b25f0228823e5a9c7abf_BUILDING%20VECTOR_black.svg" alt="Edificio">
+    </div>
+  </div>
+
+  <!-- Contenedor de la información -->
+  <div class="info-container">
+    <div class="info-box active">
+      <h2>Inicio del Proyecto</h2>
+      <p>Definimos los objetivos, analizamos los requerimientos y trazamos un plan estratégico.</p>
+    </div>
+    <div class="info-box">
+      <h2>Desarrollo y Construcción</h2>
+      <p>Implementamos la estrategia, construimos el producto y realizamos pruebas de calidad.</p>
+    </div>
+    <div class="info-box">
+      <h2>Entrega y Optimización</h2>
+      <p>Realizamos la entrega final y optimizamos el proyecto para su éxito a largo plazo.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Contenedor principal */
+  .interactive-section {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    padding: 40px;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Contenedor de los círculos */
+  .circles-container {
+    display: flex;
+    gap: 20px;
+  }
+
+  .circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    border: 2px solid transparent;
+  }
+
+  .circle img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .circle.active {
+    background-color: #007BFF;
+    border-color: #0056b3;
+    transform: scale(1.1);
+  }
+
+  /* Contenedor de la información */
+  .info-container {
+    width: 80%;
+    max-width: 500px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    position: relative;
+  }
+
+  .info-box {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  }
+
+  .info-box.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  h2 {
+    font-size: 22px;
+    color: #333;
+  }
+
+  p {
+    font-size: 16px;
+    color: #555;
+  }
+</style>
