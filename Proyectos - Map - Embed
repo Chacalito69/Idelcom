@@ -61,56 +61,67 @@
     }
   }
 
-  /* ========= NUEVOS ESTILOS ACTUALIZADOS ========= */
+  /* ========= NUEVOS ESTILOS CORREGIDOS ========= */
   .city-info-card {
     position: absolute !important;
     bottom: 20px !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    background: rgba(0, 0, 0, 0.7) !important;
-    padding: 10px 16px !important;
-    border-radius: 8px !important;
-    backdrop-filter: blur(6px) !important;
+    background: rgba(0, 0, 0, 0.50) !important;
+    padding: 14px 24px !important;
+    border-radius: 10px !important;
+    backdrop-filter: blur(8px) !important;
     z-index: 10 !important;
     display: none;
     font-family: 'Inter', system-ui, sans-serif !important;
-    min-width: auto;
+    min-width: 280px !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2) !important;
   }
 
-  .city-content {
-    display: flex !important;
-    align-items: center !important;
-    gap: 16px !important; /* Espacio aumentado */
-    flex-direction: row !important;
-  }
-
+  /* ===== COLOR DE TEXTO RESTAURADO ===== */
   .city-label {
-    color: rgba(255,255,255,0.8) !important;
+    color: rgba(255,255,255,0.8) !important; /* COLOR CORREGIDO */
     font-size: 13px !important;
     font-weight: 500 !important;
     text-transform: capitalize !important;
     letter-spacing: 0.4px !important;
     white-space: nowrap;
-    margin-right: 4px !important; /* Nuevo espacio adicional */
+  }
+
+  .city-content {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
   }
 
   .city-value-wrapper {
+    margin-left: auto !important;
     display: flex !important;
     align-items: center !important;
-    gap: 8px !important;
+    gap: 12px !important;
   }
 
   .city-donut {
-    width: 16px !important;
-    height: 16px !important;
+    width: 18px !important;
+    height: 18px !important;
     border-radius: 50% !important;
-    background: radial-gradient(
-      circle at center,
-      transparent 40%, /* Ajuste para grosor aumentado */
-      #F37023 40% 75%, /* Grosor del aro incrementado */
-      transparent 75%
-    );
-    flex-shrink: 0;
+    background: #F37023 !important;
+    position: relative !important;
+    flex-shrink: 0 !important;
+  }
+
+  .city-donut::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
+    background: rgba(0,0,0,0.50) !important;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.1) !important;
   }
 
   .city-name {
@@ -121,36 +132,26 @@
     white-space: nowrap;
   }
 
-  /* Responsive actualizado */
+  /* RESPONSIVE ACTUALIZADO */
   @media (max-width: 767px) {
     .city-info-card {
+      min-width: 240px !important;
+      padding: 12px 18px !important;
       bottom: 15px !important;
-      padding: 8px 12px !important;
-      backdrop-filter: blur(4px) !important;
-    }
-    
-    .city-content {
-      gap: 12px !important; /* Espacio reducido proporcionalmente */
-    }
-    
-    .city-label {
-      font-size: 12px !important;
-      margin-right: 3px !important; /* Ajuste móvil */
     }
     
     .city-donut {
-      width: 14px !important;
-      height: 14px !important;
-      background: radial-gradient(
-        circle at center,
-        transparent 40%,
-        #F37023 40% 75%,
-        transparent 75%
-      );
+      width: 16px !important;
+      height: 16px !important;
+    }
+    
+    .city-donut::before {
+      width: 48% !important;
+      height: 48% !important;
     }
     
     .city-name {
-      font-size: 13px !important;
+      font-size: 14px !important;
     }
   }
 </style>
