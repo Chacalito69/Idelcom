@@ -3,6 +3,7 @@
     border-radius: 0 !important;
   }
 
+  /* TUS ESTILOS ORIGINALES DE POPUP (MANTENIDOS) */
   .mapboxgl-popup-content {
     border-radius: 12px !important;
     box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
@@ -12,29 +13,29 @@
   }
 
   .popup-content h3 {
-  font-size: 18px !important;
-  color: #2C3E50 !important;
-  line-height: 1.4 !important;
-  margin-bottom: 12px !important; /* Aumentado de 8px a 12px */
-}
+    font-size: 18px !important;
+    color: #2C3E50 !important;
+    line-height: 1.4 !important;
+    margin-bottom: 12px !important;
+  }
 
-.popup-content img {
-  width: 100% !important;
-  height: 150px !important;
-  object-fit: cover !important;
-  border-radius: 8px !important;
-  margin-bottom: 12px !important; /* Mantenemos 12px aquí */
-}
+  .popup-content img {
+    width: 100% !important;
+    height: 150px !important;
+    object-fit: cover !important;
+    border-radius: 8px !important;
+    margin-bottom: 12px !important;
+  }
 
-.popup-content p {
-  font-size: 14px !important;
-  color: #555555 !important;
-  line-height: 1.5 !important;
-  margin: 0 0 16px 0 !important; /* Eliminamos el margen superior (12px → 0) */
-}
+  .popup-content p {
+    font-size: 14px !important;
+    color: #555555 !important;
+    line-height: 1.5 !important;
+    margin: 0 0 16px 0 !important;
+  }
 
   .popup-button {
-    display: block !important; /* Cambiado a bloque */
+    display: block !important;
     padding: 10px 20px !important;
     background: #F37023 !important;
     color: white !important;
@@ -42,8 +43,8 @@
     border-radius: 6px !important;
     font-size: 14px !important;
     transition: background 0.3s ease !important;
-    margin: 0 auto !important; /* Nuevo: centrado horizontal */
-    width: fit-content !important; /* Nuevo: ajuste al contenido */
+    margin: 0 auto !important;
+    width: fit-content !important;
   }
 
   .popup-button:hover {
@@ -59,6 +60,109 @@
       width: 80vw !important;
     }
   }
+
+  /* ========= NUEVOS ESTILOS ACTUALIZADOS ========= */
+  .city-info-card {
+    position: absolute !important;
+    bottom: 20px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: rgba(0, 0, 0, 0.7) !important;
+    padding: 10px 16px !important;
+    border-radius: 8px !important;
+    backdrop-filter: blur(6px) !important;
+    z-index: 10 !important;
+    display: none;
+    font-family: 'Inter', system-ui, sans-serif !important;
+    min-width: auto;
+  }
+
+  .city-content {
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important; /* Espacio aumentado */
+    flex-direction: row !important;
+  }
+
+  .city-label {
+    color: rgba(255,255,255,0.8) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    text-transform: capitalize !important;
+    letter-spacing: 0.4px !important;
+    white-space: nowrap;
+    margin-right: 4px !important; /* Nuevo espacio adicional */
+  }
+
+  .city-value-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  .city-donut {
+    width: 16px !important;
+    height: 16px !important;
+    border-radius: 50% !important;
+    background: radial-gradient(
+      circle at center,
+      transparent 40%, /* Ajuste para grosor aumentado */
+      #F37023 40% 75%, /* Grosor del aro incrementado */
+      transparent 75%
+    );
+    flex-shrink: 0;
+  }
+
+  .city-name {
+    color: white !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.1px !important;
+    white-space: nowrap;
+  }
+
+  /* Responsive actualizado */
+  @media (max-width: 767px) {
+    .city-info-card {
+      bottom: 15px !important;
+      padding: 8px 12px !important;
+      backdrop-filter: blur(4px) !important;
+    }
+    
+    .city-content {
+      gap: 12px !important; /* Espacio reducido proporcionalmente */
+    }
+    
+    .city-label {
+      font-size: 12px !important;
+      margin-right: 3px !important; /* Ajuste móvil */
+    }
+    
+    .city-donut {
+      width: 14px !important;
+      height: 14px !important;
+      background: radial-gradient(
+        circle at center,
+        transparent 40%,
+        #F37023 40% 75%,
+        transparent 75%
+      );
+    }
+    
+    .city-name {
+      font-size: 13px !important;
+    }
+  }
 </style>
 
-<div id="map"></div>
+<div id="map">
+  <div id="city-info" class="city-info-card">
+    <div class="city-content">
+      <span class="city-label">Localidad</span>
+      <div class="city-value-wrapper">
+        <div class="city-donut"></div>
+        <span class="city-name"></span>
+      </div>
+    </div>
+  </div>
+</div>
