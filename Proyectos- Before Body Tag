@@ -1,7 +1,7 @@
 <!-- Código para Before </body> Tag ACTUALIZADO -->
 <style>
   /* ----------------------------------
-    Estilos base del mapa 
+    Estilos base del mapa (TUS ORIGINALES)
   ---------------------------------- */
   #map {
     width: 100%;
@@ -17,7 +17,7 @@
     height: 80vh !important;
   }
 
-  /* Overlay de instrucciones */
+  /* Overlay de instrucciones (TUS ORIGINALES) */
   .zoom-instruction {
     position: absolute;
     top: 0;
@@ -58,44 +58,50 @@
 <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.js"></script>
 <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css" rel="stylesheet">
 
+<script src="https://api.tiles.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.js"></script>
+<link href="https://api.tiles.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css" rel="stylesheet">
+
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiZmFuYXdhdmUiLCJhIjoiY201cXBqMmx3MDJpZTJqcXhraHhmZzhtMyJ9.LFpDN7Mn8TLycK0t9MwWwg';
 
-    const mapOptions = {
+    const map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/fanawave/cm5qw161000ke01s36om35ts9',
       center: [-75.172239, -8.898636],
       zoom: 4.72,
       antialias: true,
-      scrollZoom: false, // Se desactiva inicialmente, se configura abajo según el dispositivo
-      cooperativeGestures: true, // Activa los gestos cooperativos nativos de Mapbox
-    };
+      scrollZoom: false,
+      cooperativeGestures: true,
+    });
 
-    const map = new mapboxgl.Map(mapOptions);
-
-    // Habilitar la funcionalidad nativa para escritorio y móvil
     if (!isTouchDevice) {
-      // Configurar reglas específicas para escritorio
-      map.scrollZoom.enable(); // Reactivar scroll con zoom en escritorio
+      map.scrollZoom.enable();
     }
 
-    // Asegurar que el mapa responda al redimensionamiento
     window.addEventListener('resize', () => map.resize());
 
-    // Configurar los popups y eventos del mapa
+    // Obtener referencia al recuadro de información
+    const cityBox = document.getElementById('city-info');
+    const cityNameElement = cityBox.querySelector('.city-name');
+
+    // 🔥 TEXTO INICIAL FIJO
+    cityNameElement.textContent = "Seleccionar Proyecto";
+
     map.on('load', () => {
       map.on('click', 'idelcom-projects', (event) => {
         const features = map.queryRenderedFeatures(event.point, { layers: ['idelcom-projects'] });
         if (!features.length) return;
 
         const feature = features[0];
-        const mapHeight = map.getCanvas().clientHeight;
-        const popupOffset = event.point.y < mapHeight / 2 ? { bottom: [0, -35] } : { top: [0, 15] };
 
-        new mapboxgl.Popup({ offset: popupOffset, closeButton: true })
+        // 🔥 CAMBIA EL TEXTO DEL RECUDRO AL SELECCIONAR UN PROYECTO
+        cityNameElement.textContent = feature.properties.city || "Seleccionar Proyecto";
+
+        // Mostrar popup con información del proyecto
+        new mapboxgl.Popup({ offset: [0, -35], closeButton: true })
           .setLngLat(feature.geometry.coordinates)
           .setHTML(
             `<div class="popup-content">
