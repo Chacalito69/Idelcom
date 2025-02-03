@@ -3,7 +3,6 @@
     border-radius: 0 !important;
   }
 
-  /* TUS ESTILOS ORIGINALES DE POPUP (MANTENIDOS) */
   .mapboxgl-popup-content {
     border-radius: 12px !important;
     box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
@@ -55,60 +54,93 @@
     #map {
       height: 70vh !important;
     }
-    
+
     .mapboxgl-popup-content {
       width: 80vw !important;
     }
   }
 
-  /* ========= NUEVOS ESTILOS CORREGIDOS ========= */
-  .city-info-card {
-    position: absolute !important;
-    bottom: 20px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    background: rgba(0, 0, 0, 0.50) !important;
-    padding: 14px 24px !important;
-    border-radius: 10px !important;
-    backdrop-filter: blur(8px) !important;
-    z-index: 10 !important;
-    display: none;
-    font-family: 'Inter', system-ui, sans-serif !important;
-    min-width: 280px !important;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2) !important;
+  /* ========= ACTUALIZACIÓN: SE AMOLDA DINÁMICAMENTE ========= */
+.city-info-card {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 14px 24px;
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Inter', system-ui, sans-serif;
+    min-width: 300px; /* Espacio mínimo en escritorio */
+    max-width: 90%;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    gap: 12px; /* Espaciado entre elementos */
   }
 
-  /* ===== COLOR DE TEXTO RESTAURADO ===== */
+  /* TEXTO DE LOCALIDAD */
   .city-label {
-    color: rgba(255,255,255,0.8) !important; /* COLOR CORREGIDO */
-    font-size: 13px !important;
-    font-weight: 500 !important;
-    text-transform: capitalize !important;
-    letter-spacing: 0.4px !important;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: capitalize;
+    letter-spacing: 0.4px;
     white-space: nowrap;
+    flex-shrink: 0; /* Evita colapsos en escritorio */
   }
 
-  .city-content {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    width: 100% !important;
+  /* CONTENEDOR DEL INFO CARD */
+  .city-info-card {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 14px 24px;
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Inter', system-ui, sans-serif;
+    min-width: 300px; /* Espacio mínimo en escritorio */
+    max-width: 90%;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    gap: 12px;
   }
 
+  /* TEXTO DE LOCALIDAD */
+  .city-label {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: capitalize;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* CONTENEDOR DEL CÍRCULO Y TEXTO */
   .city-value-wrapper {
-    margin-left: auto !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 12px !important;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espaciado entre círculo y texto */
+    flex-wrap: nowrap; /* Evita que el círculo y texto se separen */
   }
 
+  /* CÍRCULO */
   .city-donut {
-    width: 18px !important;
-    height: 18px !important;
-    border-radius: 50% !important;
-    background: #F37023 !important;
-    position: relative !important;
-    flex-shrink: 0 !important;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #F37023;
+    position: relative;
+    flex-shrink: 0;
   }
 
   .city-donut::before {
@@ -119,51 +151,58 @@
     transform: translate(-50%, -50%);
     width: 50%;
     height: 50%;
-    background: rgba(0,0,0,0.50) !important;
+    background: rgba(0, 0, 0, 0.5);
     border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
+  /* TEXTO SELECCIONAR PROYECTO */
   .city-name {
-    color: white !important;
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    letter-spacing: -0.1px !important;
-    white-space: nowrap;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.2;
   }
 
-  /* RESPONSIVE ACTUALIZADO */
+  /* APILA EL TEXTO "SELECCIONAR PROYECTO" */
+  .city-info-card.no-project .city-name {
+    display: flex;
+    flex-direction: column; /* Apila las palabras "Seleccionar" y "Proyecto" */
+    text-align: center;
+  }
+
+  /* RESPONSIVIDAD */
   @media (max-width: 767px) {
     .city-info-card {
-      min-width: 240px !important;
-      padding: 12px 18px !important;
-      bottom: 15px !important;
+      min-width: 240px;
+      padding: 12px 18px;
+      bottom: 15px;
+      gap: 8px;
     }
-    
+
     .city-donut {
-      width: 16px !important;
-      height: 16px !important;
+      width: 16px;
+      height: 16px;
     }
-    
+
     .city-donut::before {
-      width: 48% !important;
-      height: 48% !important;
+      width: 48%;
+      height: 48%;
     }
-    
+
     .city-name {
-      font-size: 14px !important;
+      font-size: 12px;
     }
   }
 </style>
 
 <div id="map">
-  <div id="city-info" class="city-info-card">
-    <div class="city-content">
-      <span class="city-label">Localidad</span>
-      <div class="city-value-wrapper">
-        <div class="city-donut"></div>
-        <span class="city-name"></span>
-      </div>
+  <div id="city-info" class="city-info-card no-project">
+    <span class="city-label">Localidad</span>
+    <div class="city-value-wrapper">
+      <div class="city-donut"></div>
+      <span class="city-name">Seleccionar<br>Proyecto</span>
     </div>
   </div>
 </div>
