@@ -77,45 +77,71 @@
       cooperativeGestures: true,
     });
 
+    // Activar scroll zoom para dispositivos sin pantalla táctil
     if (!isTouchDevice) {
       map.scrollZoom.enable();
     }
 
+    // Redimensionar mapa cuando se ajusta la ventana
     window.addEventListener('resize', () => map.resize());
 
-    // Obtener referencia al recuadro de información
+    // Referencia al recuadro de información
     const cityBox = document.getElementById('city-info');
     const cityNameElement = cityBox.querySelector('.city-name');
 
-    // 🔥 TEXTO INICIAL FIJO
-    cityNameElement.textContent = "Seleccionar Proyecto";
+    // 🔥 Estilo para apilar "Seleccionar" encima de "Proyecto"
+    cityNameElement.style.display = 'flex';
+    cityNameElement.style.flexDirection = 'column';
+    cityNameElement.style.alignItems = 'center';
+    cityNameElement.style.justifyContent = 'center';
+    cityNameElement.style.textAlign = 'center';
+
+    // 🔥 Texto inicial fijo
+    cityNameElement.innerHTML = "<span>Seleccionar</span><span>Proyecto</span>";
 
     map.on('load', () => {
+      // Evento para mostrar popups al hacer clic en los puntos del mapa
       map.on('click', 'idelcom-projects', (event) => {
         const features = map.queryRenderedFeatures(event.point, { layers: ['idelcom-projects'] });
         if (!features.length) return;
 
         const feature = features[0];
 
-        // 🔥 CAMBIA EL TEXTO DEL RECUDRO AL SELECCIONAR UN PROYECTO
+        // 🔥 Cambia el texto del recuadro al seleccionar un proyecto
         cityNameElement.textContent = feature.properties.city || "Seleccionar Proyecto";
+        cityNameElement.innerHTML = `<span>${feature.properties.city || "Seleccionar"}</span><span>${feature.properties.city ? "" : "Proyecto"}</span>`;
 
-        // Mostrar popup con información del proyecto
+        // Mostrar popup con diseño personalizado
         new mapboxgl.Popup({ offset: [0, -35], closeButton: true })
           .setLngLat(feature.geometry.coordinates)
           .setHTML(
             `<div class="popup-content">
               <h3>${feature.properties.name}</h3>
-              ${feature.properties.imagen_url ? `<img src="${feature.properties.imagen_url}" alt="${feature.properties.name}">` : ''}
+              ${feature.properties.imagen_url ? `<img src="${feature.properties.imagen_url}" alt="${feature.properties.name}" style="width: 100%; height: auto;">` : ''}
               <p>${feature.properties.description}</p>
-              ${feature.properties.enlace_proyecto ? `<a href="${feature.properties.enlace_proyecto}" class="popup-button" target="_blank">Ver Proyecto</a>` : ''}
+              ${feature.properties.enlace_proyecto ? `<a href="${feature.properties.enlace_proyecto}" class="popup-button" target="_blank" style="color: #007BFF; text-decoration: none; font-weight: bold;">Ver Proyecto</a>` : ''}
             </div>`
           )
           .addTo(map);
       });
 
-      map.on('mouseenter', 'idelcom-projects', () => map.getCanvas().style.cursor = 'pointer');
-      map.on('mouseleave', 'idelcom-projects', () => map.getCanvas().style.cursor = '');
+      // Cambiar el cursor al pasar sobre los puntos
+      map.on('mouseenter', 'idelcom-projects', () => {
+        map.getCanvas().style.cursor = 'pointer';
+      });
+
+      // Restaurar el cursor al salir de los puntos
+      map.on('mouseleave', 'idelcom-projects', () => {
+        map.getCanvas().style.cursor = '';
+      });
+    });
+
+    // Evento para restablecer el texto del recuadro cuando se haga clic fuera de un proyecto
+    map.on('click', (event) => {
+      const features = map.queryRenderedFeatures(event.point, { layers: ['idelcom-projects'] });
+      if (!features.length) {
+        cityNameElement.innerHTML = "<span>Seleccionar</span><span>Proyecto</span>";
+      }
     });
   });
 </script>
