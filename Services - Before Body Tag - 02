@@ -136,7 +136,7 @@
       }
     ];
 
-    let servicioActual = 0;
+let servicioActual = 0;
 
     function actualizarServicio(index) {
       const servicio = servicios[index];
@@ -201,7 +201,6 @@
         }
       }
     );
-
     document.querySelector(".boton-servicio.anterior").addEventListener(
       "click",
       function () {
