@@ -1,32 +1,43 @@
 <style>
 
+/* Botones principales (SERVICIOS) */
 .boton-servicio {
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  display: inline-block; /* Mantiene alineación */
-  text-align: center;
+  transition: 
+    transform 0.3s ease-out,
+    margin 0.3s ease-out; /* Transición para el margen */
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  margin: 0 2px; /* Espacio mínimo inicial entre botones */
 }
+
 
 .boton-servicio:hover {
   background-color: #F37023;
-  color: white;
-  font-weight: bold;
   transform: scale(1.05);
+  margin: 0 8px; /* Compensa el crecimiento del scale */
+  z-index: 2; /* Asegura que el hover esté sobre otros */
 }
+
 
 .boton-servicio.activo {
   background-color: #F37023 !important;
   color: white !important; /* Fuerza el color blanco cuando está seleccionado */
   font-weight: bold;
   transform: scale(1.05);
+  margin: 0 8px; /* Mismo margen que hover para consistencia */
+  z-index: 3; /* Mayor que hover para prioridad */
 }
+
 
 .boton-servicio-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px; /* Espaciado entre los botones para evitar solapamiento */
+  gap: 4px; /* Espaciado entre los botones para evitar solapamiento */
   justify-content: center;
 }
+
 
 .list-item-services {
   cursor: pointer;
@@ -38,4 +49,6 @@
   font-weight: bold;
   list-style-type: disc;
 }
+
+
 </style>
