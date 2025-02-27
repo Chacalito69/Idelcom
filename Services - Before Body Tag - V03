@@ -137,7 +137,7 @@
 
 let servicioActual = 0;
 
-    function actualizarServicio(index) {
+function actualizarServicio(index) {
       const servicio = servicios[index];
 
       // Actualiza el contenido principal
@@ -153,14 +153,14 @@ let servicioActual = 0;
       document.querySelector(".list").innerHTML = listaHTML;
       document.querySelector(".paragraph-7").innerHTML = servicio.lista[0].descripcion;
 
-      // Actualiza las clases de los botones para marcar el activo
+      // Actualiza las clases para marcar el botón activo y su texto interno
       document.querySelectorAll(".boton-servicio").forEach((btn, idx) => {
         const isActive = idx === index;
         btn.classList.toggle("activo", isActive);
-        // Se asume que el texto interno tiene la clase "Texto-Boton-servicio"
-        const texto = btn.querySelector(".Titulo-Boton-servicio");
-        if (texto) {
-          texto.classList.toggle("activo", isActive);
+        // Se espera que el texto interno tenga la clase "Titulo-Boton-servicio"
+        const titulo = btn.querySelector(".Titulo-Boton-servicio");
+        if (titulo) {
+          titulo.classList.toggle("activo", isActive);
         }
       });
 
@@ -183,12 +183,12 @@ let servicioActual = 0;
       });
     }
 
-    // Asocia el evento de click a cada botón de servicio para actualizar el contenido
+    // Asocia el evento click a cada botón de servicio para actualizar el contenido
     document.querySelectorAll(".boton-servicio").forEach((btn, index) => {
       btn.addEventListener("click", () => actualizarServicio(index));
     });
 
-    // Si tienes botones de "siguiente" y "anterior", se agregan sus eventos
+    // Eventos para botones "siguiente" y "anterior" si existen
     const siguienteBtn = document.querySelector(".boton-servicio.siguiente");
     if (siguienteBtn) {
       siguienteBtn.addEventListener("click", function () {
@@ -206,7 +206,7 @@ let servicioActual = 0;
       });
     }
 
-    // Inicializa el contenido con el primer servicio
+    // Inicializa con el primer servicio seleccionado
     actualizarServicio(0);
   });
 </script>
