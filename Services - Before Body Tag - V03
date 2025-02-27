@@ -1,0 +1,212 @@
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const servicios = [
+      {
+        nombre: "Soluciones Energéticas",
+        descripcion: "Infraestructura energética inteligente para operaciones eficientes y resilientes dentro de los sectores comerciales e industriales. Garantizamos un suministro eléctrico continuo mediante soluciones que combinan innovación tecnológica y sostenibilidad.",
+        imagen: "images/hero-image.jpg",
+        lista: [
+          {
+            titulo: "Energía de contingencia",
+            descripcion: "La <strong style='color:#F37023'>Energía de Contingencia</strong> garantiza el suministro eléctrico ininterrumpido mediante sistemas de respaldo como generadores y UPS, asegurando continuidad operativa ante fallos en la red."
+          },
+          {
+            titulo: "Sistema fotovoltaico",
+            descripcion: "El <strong style='color:#F37023'>Sistema Fotovoltaico</strong> permite la generación de energía limpia y sostenible a partir de la radiación solar, reduciendo costos operativos y dependencia de la red eléctrica."
+          },
+          {
+            titulo: "Protección eléctrica avanzada",
+            descripcion: "La <strong style='color:#F37023'>Protección Eléctrica Avanzada</strong> resguarda infraestructuras contra sobrecargas, cortocircuitos y sobretensiones mediante sistemas de monitoreo y dispositivos de seguridad."
+          },
+          {
+            titulo: "Calidad de energía eléctrica",
+            descripcion: "La <strong style='color:#F37023'>Calidad de Energía Eléctrica</strong> optimiza el rendimiento de los sistemas eléctricos, minimizando perturbaciones como armónicos, variaciones de voltaje y fluctuaciones de frecuencia."
+          }
+        ]
+      },
+      {
+        nombre: "Conectividad Física",
+        descripcion: "Soluciones de infraestructura para la transmisión de datos mediante sistemas de cableado de cobre y fibra óptica, garantizando la integridad y eficiencia de las redes de comunicación.",
+        imagen: "images/connectivity.jpg",
+        lista: [
+          {
+            titulo: "Canalización especializada",
+            descripcion: "La <strong style='color:#F37023'>Canalización Especializada</strong> garantiza la protección y organización eficiente del cableado eléctrico y de datos, optimizando la infraestructura y asegurando su durabilidad."
+          },
+          {
+            titulo: "Certificación de fibra óptica y cobre",
+            descripcion: "La <strong style='color:#F37023'>Certificación de Fibra Óptica y Cobre</strong> asegura el rendimiento y cumplimiento de estándares internacionales en redes de comunicación, garantizando una conexión fiable y de alta calidad."
+          },
+          {
+            titulo: "Cableado estructurado en categorías: 6, 6A, 7A",
+            descripcion: "El <strong style='color:#F37023'>cableado estructurado en categorías 6, 6A y 7A</strong> ofrece soluciones de alta velocidad para redes, soportando hasta 10 Gbps con diferentes alcances, adaptándose a necesidades de rendimiento y capacidad en diversas aplicaciones."
+          },
+          {
+            titulo: "Fibra óptica: planta interna, planta externa",
+            descripcion: "La <strong style='color:#F37023'>fibra óptica, en planta interna y externa</strong>, proporciona conexión rápida y confiable, tanto dentro de edificios como entre sedes, asegurando alto rendimiento en largas distancias."
+          }
+        ]
+      },
+      {
+        nombre: "Infraestructura de Redes",
+        descripcion: "Soluciones integrales para garantizar la conectividad y funcionamiento eficiente de redes y sistemas de comunicación con tecnología de última generación.",
+        imagen: "images/networks.jpg",
+        lista: [
+          {
+            titulo: "Networking: switches, routers y redes WiFi",
+            descripcion: "El servicio de <strong style='color:#F37023'>Networking</strong> abarca switches para redes locales, routers para gestionar el tráfico entre redes y WiFi para conectividad inalámbrica, asegurando una infraestructura eficiente y segura."
+          },
+          {
+            titulo: "Radioenlaces para conectividad a distancia",
+            descripcion: "Los <strong style='color:#F37023'>radioenlaces</strong> proporcionan conectividad a larga distancia, permitiendo la transmisión de datos de manera estable y segura entre diferentes ubicaciones sin necesidad de cableado físico."
+          },
+          {
+            titulo: "Soluciones convergentes e hiperconvergente, servidores y almacenamiento",
+            descripcion: "Las <strong style='color:#F37023'>soluciones convergentes e hiperconvergentes</strong> integran servidores, almacenamiento y redes en una sola plataforma, optimizando el rendimiento y simplificando la gestión."
+          }
+        ]
+      },
+      {
+        nombre: "Sistemas Especiales",
+        descripcion: "Soluciones avanzadas de comunicación, seguridad y control que optimizan operaciones y garantizan seguridad en entornos diversos.",
+        imagen: "images/special-systems.jpg",
+        lista: [
+          {
+            titulo: "CCTV y control de acceso",
+            descripcion: "El servicio de <strong style='color:#F37023'>CCTV y control de acceso</strong> combina videovigilancia y sistemas de control para gestionar entradas, asegurando la protección de instalaciones y personas mediante monitoreo y acceso restringido."
+          },
+          {
+            titulo: "Sistemas de intrusión y alarmas",
+            descripcion: "Los <strong style='color:#F37023'>sistemas de intrusión y alarmas</strong> detectan y alertan sobre intentos de acceso no autorizado, protegiendo instalaciones mediante sensores y notificaciones inmediatas."
+          },
+          {
+            titulo: "Soluciones de telefonía IP y megafonía",
+            descripcion: "Las soluciones de <strong style='color:#F37023'>telefonía IP y megafonía</strong> ofrecen comunicación eficiente a través de Internet, permitiendo llamadas de alta calidad y sistemas de megafonía en tiempo real."
+          },
+          {
+            titulo: "Integración de sistemas BMS",
+            descripcion: "La integración de <strong style='color:#F37023'>sistemas BMS</strong> permite la gestión centralizada de diversos sistemas de un edificio, mejorando la eficiencia energética y reduciendo costos operativos."
+          },
+          {
+            titulo: "Soluciones para telepresencia y comunicación empresarial",
+            descripcion: "Las soluciones para <strong style='color:#F37023'>telepresencia y comunicación empresarial</strong> facilitan reuniones virtuales de alta calidad, mejorando la colaboración y productividad entre equipos."
+          },
+          {
+            titulo: "Soluciones de ciberseguridad: firewalls, IPS/IDS",
+            descripcion: "Las soluciones de <strong style='color:#F37023'>ciberseguridad</strong> incluyen firewalls para bloquear accesos no autorizados y sistemas de prevención de intrusiones."
+          },
+          {
+            titulo: "Comunicación por radio (UHF/VHF)",
+            descripcion: "La <strong style='color:#F37023'>comunicación por radio (UHF/VHF)</strong> permite transmisión de voz y datos a largas distancias, ideal para ambientes industriales o de emergencia."
+          }
+        ]
+      },
+      {
+        nombre: "Centro de Datos",
+        descripcion: "Ofrecemos soluciones completas en diseño, construcción y mantenimiento de centros de datos, cumpliendo los más altos estándares de seguridad, eficiencia y disponibilidad.",
+        imagen: "images/datacenter.jpg",
+        lista: [
+          {
+            titulo: "Diseño y construcción de espacios físicos",
+            descripcion: "El <strong style='color:#F37023'>diseño y construcción de espacios físicos</strong> para data centers garantiza infraestructura segura y eficiente."
+          },
+          {
+            titulo: "Instalación de sistemas",
+            descripcion: `
+              <ul style="list-style:none; padding-left:0;">
+                <li>• Conectividad</li>
+                <li>• Respaldo de energía</li>
+                <li>• Climatización</li>
+                <li>• Monitoreo</li>
+                <li>• Detección y extinción de incendios</li>
+                <li>• Automatización y control</li>
+              </ul>
+            `
+          },
+          {
+            titulo: "Mantenimiento y administración",
+            descripcion: "El <strong style='color:#F37023'>mantenimiento y administración de data centers</strong> garantiza su operatividad, seguridad y eficiencia."
+          },
+          {
+            titulo: "Diseño conforme a estándares Tier 1, 2, 3, y 4",
+            descripcion: "El <strong style='color:#F37023'>diseño conforme a estándares Tier 1, 2, 3 y 4</strong> garantiza distintos niveles de disponibilidad y redundancia en data centers."
+          }
+        ]
+      }
+    ];
+
+let servicioActual = 0;
+
+    function actualizarServicio(index) {
+      const servicio = servicios[index];
+
+      // Actualiza el contenido principal
+      document.querySelector(".heading-info-servicio").textContent = servicio.nombre;
+      document.querySelector(".paragraph-6").textContent = servicio.descripcion;
+      document.querySelector(".imagen-servicio-container").src = servicio.imagen;
+
+      const listaHTML = servicio.lista
+        .map((item, idx) =>
+          `<li class="list-item-services ${idx === 0 ? "activo" : ""}" data-index="${idx}">${item.titulo}</li>`
+        )
+        .join("");
+      document.querySelector(".list").innerHTML = listaHTML;
+      document.querySelector(".paragraph-7").innerHTML = servicio.lista[0].descripcion;
+
+      // Actualiza las clases de los botones para marcar el activo
+      document.querySelectorAll(".boton-servicio").forEach((btn, idx) => {
+        const isActive = idx === index;
+        btn.classList.toggle("activo", isActive);
+        // Se asume que el texto interno tiene la clase "Texto-Boton-servicio"
+        const texto = btn.querySelector(".Titulo-Boton-servicio");
+        if (texto) {
+          texto.classList.toggle("activo", isActive);
+        }
+      });
+
+      servicioActual = index;
+      agregarEventosLista();
+    }
+
+    function agregarEventosLista() {
+      document.querySelectorAll(".list-item-services").forEach((item) => {
+        item.addEventListener("click", function () {
+          document
+            .querySelectorAll(".list-item-services")
+            .forEach((el) => el.classList.remove("activo"));
+          this.classList.add("activo");
+
+          const servicio = servicios[servicioActual];
+          const index = parseInt(this.getAttribute("data-index"));
+          document.querySelector(".paragraph-7").innerHTML = servicio.lista[index].descripcion;
+        });
+      });
+    }
+
+    // Asocia el evento de click a cada botón de servicio para actualizar el contenido
+    document.querySelectorAll(".boton-servicio").forEach((btn, index) => {
+      btn.addEventListener("click", () => actualizarServicio(index));
+    });
+
+    // Si tienes botones de "siguiente" y "anterior", se agregan sus eventos
+    const siguienteBtn = document.querySelector(".boton-servicio.siguiente");
+    if (siguienteBtn) {
+      siguienteBtn.addEventListener("click", function () {
+        if (servicioActual < servicios.length - 1) {
+          actualizarServicio(servicioActual + 1);
+        }
+      });
+    }
+    const anteriorBtn = document.querySelector(".boton-servicio.anterior");
+    if (anteriorBtn) {
+      anteriorBtn.addEventListener("click", function () {
+        if (servicioActual > 0) {
+          actualizarServicio(servicioActual - 1);
+        }
+      });
+    }
+
+    // Inicializa el contenido con el primer servicio
+    actualizarServicio(0);
+  });
+</script>
