@@ -1,0 +1,41 @@
+<style>
+
+.boton-servicio {
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: inline-block; /* Mantiene alineación */
+  text-align: center;
+}
+
+.boton-servicio:hover {
+  background-color: #F37023;
+  color: white;
+  font-weight: bold;
+  transform: scale(1.05);
+}
+
+.boton-servicio.activo {
+  background-color: #F37023 !important;
+  color: white !important; /* Fuerza el color blanco cuando está seleccionado */
+  font-weight: bold;
+  transform: scale(1.05);
+}
+
+.boton-servicio-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Espaciado entre los botones para evitar solapamiento */
+  justify-content: center;
+}
+
+.list-item-services {
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.list-item-services.activo {
+  color: #F37023;
+  font-weight: bold;
+  list-style-type: disc;
+}
+</style>
