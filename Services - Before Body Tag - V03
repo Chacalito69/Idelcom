@@ -137,7 +137,7 @@
 
 let servicioActual = 0;
 
-function actualizarServicio(index) {
+    function actualizarServicio(index) {
       const servicio = servicios[index];
 
       // Actualiza el contenido principal
@@ -157,10 +157,11 @@ function actualizarServicio(index) {
       document.querySelectorAll(".boton-servicio").forEach((btn, idx) => {
         const isActive = idx === index;
         btn.classList.toggle("activo", isActive);
+        
         // Se espera que el texto interno tenga la clase "Titulo-Boton-servicio"
         const titulo = btn.querySelector(".Titulo-Boton-servicio");
         if (titulo) {
-          titulo.classList.toggle("activo", isActive);
+          titulo.classList.toggle("Titulo-Boton-servicio-activo", isActive);
         }
       });
 
