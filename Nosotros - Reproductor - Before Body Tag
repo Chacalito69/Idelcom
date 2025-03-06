@@ -1,18 +1,17 @@
 <style>
+/* MODAL PERFECTAMENTE CENTRADO */
 .seccion-play-video-modal {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.95);
-    width: 80vw;
-    height: 45vw;
-    max-width: 1200px;
-    max-height: 675px;
+    transform: translate(-50%, -50%) scale(0.98);
+    width: min(90vw, 1280px);
+    aspect-ratio: 16/9;
     background: #000;
     border-radius: 16px;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10000;
     box-shadow: 0 32px 64px rgba(0,0,0,0.4);
 }
@@ -29,7 +28,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.85);
+    background: rgba(0,0,0,0.9);
     backdrop-filter: blur(12px);
     opacity: 0;
     visibility: hidden;
@@ -46,9 +45,8 @@
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -57,23 +55,54 @@
     background: rgba(255,255,255,0.2);
     transform: rotate(90deg);
 }
+
+.seccion-play-video__iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 16px;
+}
+
+@media (max-width: 768px) {
+    .seccion-play-video__close {
+        top: 16px;
+        right: 16px;
+        width: 32px;
+        height: 32px;
+    }
+}
 </style>
 
 <div class="seccion-play-video-overlay"></div>
 <div class="seccion-play-video-modal">
-    <button class="seccion-play-video__close">✕</button>
-    <iframe class="seccion-play-video__iframe" allow="autoplay; fullscreen"></iframe>
+    <button class="seccion-play-video__close">
+        <svg class="seccion-play-video__close-icon" viewBox="0 0 24 24">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+    </button>
+    <iframe class="seccion-play-video__iframe" 
+            src="" 
+            allow="autoplay; fullscreen" 
+            frameborder="0"
+            allowfullscreen></iframe>
 </div>
 
 <script>
 document.querySelector('.seccion-play-video__container').addEventListener('click', () => {
-    document.querySelector('.seccion-play-video-modal').classList.add('active');
-    document.querySelector('.seccion-play-video-overlay').classList.add('active');
+    const modal = document.querySelector('.seccion-play-video-modal');
+    const overlay = document.querySelector('.seccion-play-video-overlay');
+    const iframe = document.querySelector('.seccion-play-video__iframe');
+    
+    iframe.src = 'https://player.vimeo.com/video/82481183?autoplay=1&title=0&byline=0&portrait=0&quality=1080p';
+    modal.classList.add('active');
+    overlay.classList.add('active');
 });
 
-document.querySelector('.seccion-play-video__close').addEventListener('click', () => {
-    document.querySelector('.seccion-play-video-modal').classList.remove('active');
-    document.querySelector('.seccion-play-video-overlay').classList.remove('active');
+document.querySelectorAll('.seccion-play-video-overlay, .seccion-play-video__close').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelector('.seccion-play-video-modal').classList.remove('active');
+        document.querySelector('.seccion-play-video-overlay').classList.remove('active');
+        document.querySelector('.seccion-play-video__iframe').src = '';
+    });
 });
 </script>
-
