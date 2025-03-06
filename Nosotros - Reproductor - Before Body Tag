@@ -64,3 +64,16 @@
     <button class="seccion-play-video__close">✕</button>
     <iframe class="seccion-play-video__iframe" allow="autoplay; fullscreen"></iframe>
 </div>
+
+<script>
+document.querySelector('.seccion-play-video__container').addEventListener('click', () => {
+    document.querySelector('.seccion-play-video-modal').classList.add('active');
+    document.querySelector('.seccion-play-video-overlay').classList.add('active');
+});
+
+document.querySelector('.seccion-play-video__close').addEventListener('click', () => {
+    document.querySelector('.seccion-play-video-modal').classList.remove('active');
+    document.querySelector('.seccion-play-video-overlay').classList.remove('active');
+});
+</script>
+
