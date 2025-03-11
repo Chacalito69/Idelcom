@@ -113,15 +113,33 @@
           {
             titulo: "Instalación de sistemas",
             descripcion: `
-              <ul style="list-style:none; padding-left:0;">
-                <li>• Conectividad</li>
-                <li>• Respaldo de energía</li>
-                <li>• Climatización</li>
-                <li>• Monitoreo</li>
-                <li>• Detección y extinción de incendios</li>
-                <li>• Automatización y control</li>
-              </ul>
-            `
+    <div class="systems-grid">
+      <div class="system-card">
+        <div class="system-bullet"></div>
+        <span class="system-label">Conectividad</span>
+      </div>
+      <div class="system-card">
+        <div class="system-bullet"></div>
+        <span class="system-label">Respaldo de energía</span>
+      </div>
+      <div class="system-card">
+        <div class="system-bullet"></div>
+        <span class="system-label">Climatización</span>
+      </div>
+      <div class="system-card">
+        <div class="system-bullet"></div>
+        <span class="system-label">Monitoreo</span>
+      </div>
+      <div class="system-card">
+        <div class="system-bullet"></div>
+        <span class="system-label">Detección y extinción de incendios</span>
+      </div>
+      <div class="system-card">
+        <div class="system-bullet"></div>
+        <span class="system-label">Automatización y control</span>
+      </div>
+    </div>
+  `
           },
           {
             titulo: "Mantenimiento y administración",
