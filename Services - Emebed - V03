@@ -40,6 +40,11 @@
   font-weight: bold !important;
 }
 
+.boton-servicio:hover .Titulo-Boton-servicio,
+.boton-servicio.activo .Titulo-Boton-servicio {
+  color: white !important;
+}
+
 .boton-servicio-container {
   display: flex;
   flex-wrap: wrap;
