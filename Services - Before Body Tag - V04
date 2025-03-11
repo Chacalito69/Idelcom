@@ -3,7 +3,7 @@
     const servicios = [
       {
         nombre: "Soluciones Energéticas",
-        descripcion: "Infraestructura energética inteligente para operaciones eficientes y resilientes dentro de los sectores comerciales e industriales. Garantizamos un suministro eléctrico continuo mediante soluciones que combinan innovación tecnológica y sostenibilidad.",
+        descripcion: "Infraestructura inteligente que garantiza operaciones ininterrumpidas en entornos comerciales e industriales. La integración de sistemas de respaldo avanzados –generadores, UPS y tecnología fotovoltaica con monitoreo en tiempo real– fusiona innovación y sostenibilidad para optimizar el rendimiento energético y reducir costos operativos.",
         imagen: "images/hero-image.jpg",
         lista: [
           {
@@ -26,7 +26,7 @@
       },
       {
         nombre: "Conectividad Física",
-        descripcion: "Soluciones de infraestructura para la transmisión de datos mediante sistemas de cableado de cobre y fibra óptica, garantizando la integridad y eficiencia de las redes de comunicación.",
+        descripcion: "Infraestructura robusta que asegura una transmisión de datos veloz y confiable. Sistemas de cableado de cobre y fibra óptica, acompañados de canalizaciones especializadas y certificaciones de alta calidad, ofrecen conexiones seguras tanto en instalaciones internas como en entornos externos.",
         imagen: "images/connectivity.jpg",
         lista: [
           {
@@ -49,7 +49,7 @@
       },
       {
         nombre: "Infraestructura de Redes",
-        descripcion: "Soluciones integrales para garantizar la conectividad y funcionamiento eficiente de redes y sistemas de comunicación con tecnología de última generación.",
+        descripcion: "Soluciones integrales de conectividad que garantizan un rendimiento óptimo y seguro. Con un enfoque que abarca desde redes locales –switches, routers y WiFi– hasta radioenlaces y plataformas convergentes, se potencia la comunicación adaptada a las exigencias de cada entorno.",
         imagen: "images/networks.jpg",
         lista: [
           {
@@ -68,7 +68,7 @@
       },
       {
         nombre: "Sistemas Especiales",
-        descripcion: "Soluciones avanzadas de comunicación, seguridad y control que optimizan operaciones y garantizan seguridad en entornos diversos.",
+        descripcion: "Plataformas avanzadas en seguridad y comunicación que combinan videovigilancia, control de acceso, detección de intrusiones, telefonía IP, ciberseguridad y sistemas de radio. Cada solución está diseñada para ofrecer protección integral y operatividad en entornos críticos y dinámicos.",
         imagen: "images/special-systems.jpg",
         lista: [
           {
@@ -85,7 +85,7 @@
           },
           {
             titulo: "Integración de sistemas BMS",
-            descripcion: "La integración de <strong style='color:#F37023'>sistemas BMS</strong> permite la gestión centralizada de diversos sistemas de un edificio, mejorando la eficiencia energética y reduciendo costos operativos."
+            descripcion: "La integración de <strong style='color:#F37023'>sistemas BMS</strong> (Building Management System) permite la gestión centralizada de diversos sistemas de un edificio, mejorando la eficiencia energética y reduciendo costos operativos."
           },
           {
             titulo: "Soluciones para telepresencia y comunicación empresarial",
@@ -103,7 +103,7 @@
       },
       {
         nombre: "Centro de Datos",
-        descripcion: "Ofrecemos soluciones completas en diseño, construcción y mantenimiento de centros de datos, cumpliendo los más altos estándares de seguridad, eficiencia y disponibilidad.",
+        descripcion: "Diseño, construcción y gestión de instalaciones de alto rendimiento que cumplen con los estándares más exigentes de seguridad y eficiencia. Una solución integral en conectividad, respaldo energético, climatización y monitoreo que garantiza continuidad operativa conforme a los estándares Tier 1 a 4.",
         imagen: "images/datacenter.jpg",
         lista: [
           {
@@ -137,85 +137,163 @@
 
 let servicioActual = 0;
 
-    function actualizarServicio(index) {
-      const servicio = servicios[index];
+  // Seleccionamos los botones de navegación usando la nueva clase
+  const siguienteBtn = document.querySelector('.boton-navegacion.siguiente');
+  const anteriorBtn = document.querySelector('.boton-navegacion.anterior');
 
-      // Actualiza contenido principal
-      document.querySelector(".heading-info-servicio").textContent = servicio.nombre;
-      document.querySelector(".paragraph-6").textContent = servicio.descripcion;
-      document.querySelector(".imagen-servicio-container").src = servicio.imagen;
+  // Función para actualizar el estado de los botones de navegación
+  function actualizarNavegacion() {
+    if (anteriorBtn) {
+      anteriorBtn.disabled = servicioActual === 0;
+      if (servicioActual === 0) {
+        anteriorBtn.classList.add('rebote');
+        setTimeout(() => anteriorBtn.classList.remove('rebote'), 800);
+      }
+    }
+    if (siguienteBtn) {
+      siguienteBtn.disabled = servicioActual === servicios.length - 1;
+      if (servicioActual === servicios.length - 1) {
+        siguienteBtn.classList.add('rebote');
+        setTimeout(() => siguienteBtn.classList.remove('rebote'), 800);
+      }
+    }
+  }
 
-      // Genera la lista de servicios dentro de cada categoría
-      const listaHTML = servicio.lista
-        .map((item, idx) =>
-          `<li class="list-item-services ${idx === 0 ? "activo" : ""}" data-index="${idx}">${item.titulo}</li>`
-        )
-        .join("");
-      document.querySelector(".list").innerHTML = listaHTML;
-      document.querySelector(".paragraph-7").innerHTML = servicio.lista[0].descripcion;
+  // Función para actualizar el contenido del servicio
+  function actualizarServicio(index) {
+    const prevServicio = servicioActual; // Guardamos el valor anterior
+    servicioActual = index;
+    const servicio = servicios[index];
 
-      // Remueve la clase activa de todos los botones y sus textos
-      document.querySelectorAll(".boton-servicio").forEach((btn) => {
-        btn.classList.remove("activo");
-        const titulo = btn.querySelector(".Titulo-Boton-servicio");
-        if (titulo) {
-          titulo.classList.remove("Titulo-Boton-servicio-activo");
-        }
-      });
+    // Actualiza contenido principal
+    document.querySelector(".heading-info-servicio").textContent = servicio.nombre;
+    document.querySelector(".paragraph-6").textContent = servicio.descripcion;
+    document.querySelector(".imagen-servicio-container").src = servicio.imagen;
 
-      // Activa el botón y cambia su texto a blanco
-      const botonActivo = document.querySelectorAll(".boton-servicio")[index];
+    // Genera la lista de servicios dentro de cada categoría
+    const listaHTML = servicio.lista
+      .map((item, idx) =>
+        `<li class="list-item-services ${idx === 0 ? "activo" : ""}" data-index="${idx}">${item.titulo}</li>`
+      )
+      .join("");
+    document.querySelector(".list").innerHTML = listaHTML;
+    document.querySelector(".paragraph-7").innerHTML = servicio.lista[0].descripcion;
+
+    // Remueve la clase activa de todos los botones de servicio y sus textos
+    document.querySelectorAll(".boton-servicio").forEach((btn) => {
+      btn.classList.remove("activo");
+      const titulo = btn.querySelector(".Titulo-Boton-servicio");
+      if (titulo) {
+        titulo.classList.remove("Titulo-Boton-servicio-activo");
+      }
+    });
+
+    // Activa el botón de servicio correspondiente
+    const botonActivo = document.querySelectorAll(".boton-servicio")[index];
+    if (botonActivo) {
       botonActivo.classList.add("activo");
-
       const tituloActivo = botonActivo.querySelector(".Titulo-Boton-servicio");
       if (tituloActivo) {
         tituloActivo.classList.add("Titulo-Boton-servicio-activo");
       }
-
-      servicioActual = index;
-      agregarEventosLista();
     }
 
-    function agregarEventosLista() {
-      document.querySelectorAll(".list-item-services").forEach((item) => {
-        item.addEventListener("click", function () {
-          document
-            .querySelectorAll(".list-item-services")
-            .forEach((el) => el.classList.remove("activo"));
-          this.classList.add("activo");
+    // Actualiza eventos de la lista interna
+    agregarEventosLista();
 
-          const servicio = servicios[servicioActual];
-          const index = parseInt(this.getAttribute("data-index"));
-          document.querySelector(".paragraph-7").innerHTML = servicio.lista[index].descripcion;
-        });
+    // Actualiza la navegación
+    actualizarNavegacion();
+
+    // Animación de feedback en el botón de navegación
+    if (index > prevServicio && siguienteBtn) {
+      siguienteBtn.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        siguienteBtn.style.transform = '';
+      }, 100);
+    } else if (index < prevServicio && anteriorBtn) {
+      anteriorBtn.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        anteriorBtn.style.transform = '';
+      }, 100);
+    }
+  }
+
+  function agregarEventosLista() {
+    document.querySelectorAll(".list-item-services").forEach((item) => {
+      item.addEventListener("click", function () {
+        document.querySelectorAll(".list-item-services").forEach((el) => el.classList.remove("activo"));
+        this.classList.add("activo");
+
+        const servicio = servicios[servicioActual];
+        const index = parseInt(this.getAttribute("data-index"));
+        document.querySelector(".paragraph-7").innerHTML = servicio.lista[index].descripcion;
       });
-    }
-
-    // Eventos para los botones de selección
-    document.querySelectorAll(".boton-servicio").forEach((btn, index) => {
-      btn.addEventListener("click", () => actualizarServicio(index));
     });
+  }
 
-    // Eventos para los botones "siguiente" y "anterior"
-    const siguienteBtn = document.querySelector(".boton-servicio.siguiente");
-    if (siguienteBtn) {
-      siguienteBtn.addEventListener("click", function () {
-        if (servicioActual < servicios.length - 1) {
-          actualizarServicio(servicioActual + 1);
-        }
-      });
-    }
-
-    const anteriorBtn = document.querySelector(".boton-servicio.anterior");
-    if (anteriorBtn) {
-      anteriorBtn.addEventListener("click", function () {
-        if (servicioActual > 0) {
-          actualizarServicio(servicioActual - 1);
-        }
-      });
-    }
-
-    // Inicializa con el primer servicio seleccionado
-    actualizarServicio(0);
+  // Eventos para los botones de selección de servicios
+  document.querySelectorAll(".boton-servicio").forEach((btn, index) => {
+    btn.addEventListener("click", () => actualizarServicio(index));
   });
+
+  // Eventos para los botones de navegación
+  if (siguienteBtn) {
+    siguienteBtn.addEventListener("click", function () {
+      if (servicioActual < servicios.length - 1) {
+        actualizarServicio(servicioActual + 1);
+      }
+    });
+  }
+
+  if (anteriorBtn) {
+    anteriorBtn.addEventListener("click", function () {
+      if (servicioActual > 0) {
+        actualizarServicio(servicioActual - 1);
+      }
+    });
+  }
+
+  // Efecto de arrastre táctil para navegación
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+  }, false);
+
+  document.addEventListener('touchend', e => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const diffX = touchStartX - touchEndX;
+    if (Math.abs(diffX) > 50) {
+      if (diffX > 0 && servicioActual < servicios.length - 1) {
+        actualizarServicio(servicioActual + 1);
+      } else if (diffX < 0 && servicioActual > 0) {
+        actualizarServicio(servicioActual - 1);
+      }
+    }
+  });
+
+  // Inicializa con el primer servicio seleccionado
+  actualizarServicio(0);
+
+  // Código para efecto ripple en botones (elegant-btn)
+  const buttons = document.querySelectorAll('.elegant-btn');
+  
+  buttons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      let rect = button.getBoundingClientRect();
+      let x = e.clientX - rect.left;
+      let y = e.clientY - rect.top;
+      
+      let ripple = document.createElement('span');
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      ripple.classList.add('ripple-effect');
+      
+      this.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+  });
+});
 </script>
