@@ -135,165 +135,141 @@
       }
     ];
 
-let servicioActual = 0;
+    let servicioActual = 0;
 
-  // Seleccionamos los botones de navegación usando la nueva clase
-  const siguienteBtn = document.querySelector('.boton-navegacion.siguiente');
-  const anteriorBtn = document.querySelector('.boton-navegacion.anterior');
+    const siguienteBtn = document.querySelector('.boton-navegacion.siguiente');
+    const anteriorBtn = document.querySelector('.boton-navegacion.anterior');
 
-  // Función para actualizar el estado de los botones de navegación
-  function actualizarNavegacion() {
-    if (anteriorBtn) {
-      anteriorBtn.disabled = servicioActual === 0;
-      if (servicioActual === 0) {
-        anteriorBtn.classList.add('rebote');
-        setTimeout(() => anteriorBtn.classList.remove('rebote'), 800);
+    function actualizarNavegacion() {
+      if (anteriorBtn) {
+        anteriorBtn.disabled = servicioActual === 0;
+      }
+      if (siguienteBtn) {
+        siguienteBtn.disabled = servicioActual === servicios.length - 1;
       }
     }
+
+    function actualizarServicio(index) {
+      const prevServicio = servicioActual;
+      servicioActual = index;
+      const servicio = servicios[index];
+
+      document.querySelector(".heading-info-servicio").textContent = servicio.nombre;
+      document.querySelector(".paragraph-6").textContent = servicio.descripcion;
+      document.querySelector(".imagen-servicio-container").src = servicio.imagen;
+
+      // Generamos la lista
+      const listaHTML = servicio.lista
+        .map((item, idx) =>
+          `<li class="list-item-services ${idx === 0 ? "activo" : ""}" data-index="${idx}">${item.titulo}</li>`
+        )
+        .join("");
+      document.querySelector(".list").innerHTML = listaHTML;
+      document.querySelector(".paragraph-7").innerHTML = servicio.lista[0].descripcion;
+
+      // Quitamos "activo" a todos los botones
+      document.querySelectorAll(".boton-servicio").forEach((btn) => {
+        btn.classList.remove("activo");
+        const titulo = btn.querySelector(".Title-Boton-servicio");
+        if (titulo) {
+          titulo.classList.remove("Title-Boton-servicio-activo");
+        }
+      });
+
+      // Activamos el botón actual
+      const botonActivo = document.querySelectorAll(".boton-servicio")[index];
+      if (botonActivo) {
+        botonActivo.classList.add("activo");
+        const tituloActivo = botonActivo.querySelector(".Title-Boton-servicio");
+        if (tituloActivo) {
+          // Si deseas usar una clase “activo” en el texto también
+          tituloActivo.classList.add("Title-Boton-servicio-activo");
+        }
+      }
+
+      agregarEventosLista();
+      actualizarNavegacion();
+
+      // Pequeña animación de feedback
+      if (index > prevServicio && siguienteBtn) {
+        siguienteBtn.style.transform = 'scale(0.95)';
+        setTimeout(() => { siguienteBtn.style.transform = ''; }, 100);
+      } else if (index < prevServicio && anteriorBtn) {
+        anteriorBtn.style.transform = 'scale(0.95)';
+        setTimeout(() => { anteriorBtn.style.transform = ''; }, 100);
+      }
+    }
+
+    function agregarEventosLista() {
+      document.querySelectorAll(".list-item-services").forEach((item) => {
+        item.addEventListener("click", function () {
+          document.querySelectorAll(".list-item-services").forEach((el) => el.classList.remove("activo"));
+          this.classList.add("activo");
+          const servicio = servicios[servicioActual];
+          const index = parseInt(this.getAttribute("data-index"));
+          document.querySelector(".paragraph-7").innerHTML = servicio.lista[index].descripcion;
+        });
+      });
+    }
+
+    document.querySelectorAll(".boton-servicio").forEach((btn, index) => {
+      btn.addEventListener("click", () => actualizarServicio(index));
+    });
+
     if (siguienteBtn) {
-      siguienteBtn.disabled = servicioActual === servicios.length - 1;
-      if (servicioActual === servicios.length - 1) {
-        siguienteBtn.classList.add('rebote');
-        setTimeout(() => siguienteBtn.classList.remove('rebote'), 800);
-      }
+      siguienteBtn.addEventListener("click", function () {
+        if (servicioActual < servicios.length - 1) {
+          actualizarServicio(servicioActual + 1);
+        }
+      });
     }
-  }
+    if (anteriorBtn) {
+      anteriorBtn.addEventListener("click", function () {
+        if (servicioActual > 0) {
+          actualizarServicio(servicioActual - 1);
+        }
+      });
+    }
 
-  // Función para actualizar el contenido del servicio
-  function actualizarServicio(index) {
-    const prevServicio = servicioActual; // Guardamos el valor anterior
-    servicioActual = index;
-    const servicio = servicios[index];
-
-    // Actualiza contenido principal
-    document.querySelector(".heading-info-servicio").textContent = servicio.nombre;
-    document.querySelector(".paragraph-6").textContent = servicio.descripcion;
-    document.querySelector(".imagen-servicio-container").src = servicio.imagen;
-
-    // Genera la lista de servicios dentro de cada categoría
-    const listaHTML = servicio.lista
-      .map((item, idx) =>
-        `<li class="list-item-services ${idx === 0 ? "activo" : ""}" data-index="${idx}">${item.titulo}</li>`
-      )
-      .join("");
-    document.querySelector(".list").innerHTML = listaHTML;
-    document.querySelector(".paragraph-7").innerHTML = servicio.lista[0].descripcion;
-
-    // Remueve la clase activa de todos los botones de servicio y sus textos
-    document.querySelectorAll(".boton-servicio").forEach((btn) => {
-      btn.classList.remove("activo");
-      const titulo = btn.querySelector(".Titulo-Boton-servicio");
-      if (titulo) {
-        titulo.classList.remove("Titulo-Boton-servicio-activo");
+    // Swipe en móvil
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+    }, false);
+    document.addEventListener('touchend', e => {
+      const touchEndX = e.changedTouches[0].clientX;
+      const diffX = touchStartX - touchEndX;
+      if (Math.abs(diffX) > 50) {
+        if (diffX > 0 && servicioActual < servicios.length - 1) {
+          actualizarServicio(servicioActual + 1);
+        } else if (diffX < 0 && servicioActual > 0) {
+          actualizarServicio(servicioActual - 1);
+        }
       }
     });
 
-    // Activa el botón de servicio correspondiente
-    const botonActivo = document.querySelectorAll(".boton-servicio")[index];
-    if (botonActivo) {
-      botonActivo.classList.add("activo");
-      const tituloActivo = botonActivo.querySelector(".Titulo-Boton-servicio");
-      if (tituloActivo) {
-        tituloActivo.classList.add("Titulo-Boton-servicio-activo");
-      }
-    }
+    // Iniciamos con el primer servicio
+    actualizarServicio(0);
 
-    // Actualiza eventos de la lista interna
-    agregarEventosLista();
-
-    // Actualiza la navegación
-    actualizarNavegacion();
-
-    // Animación de feedback en el botón de navegación
-    if (index > prevServicio && siguienteBtn) {
-      siguienteBtn.style.transform = 'scale(0.95)';
-      setTimeout(() => {
-        siguienteBtn.style.transform = '';
-      }, 100);
-    } else if (index < prevServicio && anteriorBtn) {
-      anteriorBtn.style.transform = 'scale(0.95)';
-      setTimeout(() => {
-        anteriorBtn.style.transform = '';
-      }, 100);
-    }
-  }
-
-  function agregarEventosLista() {
-    document.querySelectorAll(".list-item-services").forEach((item) => {
-      item.addEventListener("click", function () {
-        document.querySelectorAll(".list-item-services").forEach((el) => el.classList.remove("activo"));
-        this.classList.add("activo");
-
-        const servicio = servicios[servicioActual];
-        const index = parseInt(this.getAttribute("data-index"));
-        document.querySelector(".paragraph-7").innerHTML = servicio.lista[index].descripcion;
+    // Efecto ripple
+    const buttons = document.querySelectorAll('.elegant-btn');
+    buttons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        let rect = button.getBoundingClientRect();
+        let x = e.clientX - rect.left;
+        let y = e.clientY - rect.top;
+        
+        let ripple = document.createElement('span');
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.classList.add('ripple-effect');
+        
+        this.appendChild(ripple);
+        
+        setTimeout(() => {
+          ripple.remove();
+        }, 600);
       });
     });
-  }
-
-  // Eventos para los botones de selección de servicios
-  document.querySelectorAll(".boton-servicio").forEach((btn, index) => {
-    btn.addEventListener("click", () => actualizarServicio(index));
   });
-
-  // Eventos para los botones de navegación
-  if (siguienteBtn) {
-    siguienteBtn.addEventListener("click", function () {
-      if (servicioActual < servicios.length - 1) {
-        actualizarServicio(servicioActual + 1);
-      }
-    });
-  }
-
-  if (anteriorBtn) {
-    anteriorBtn.addEventListener("click", function () {
-      if (servicioActual > 0) {
-        actualizarServicio(servicioActual - 1);
-      }
-    });
-  }
-
-  // Efecto de arrastre táctil para navegación
-  let touchStartX = 0;
-  document.addEventListener('touchstart', e => {
-    touchStartX = e.touches[0].clientX;
-  }, false);
-
-  document.addEventListener('touchend', e => {
-    const touchEndX = e.changedTouches[0].clientX;
-    const diffX = touchStartX - touchEndX;
-    if (Math.abs(diffX) > 50) {
-      if (diffX > 0 && servicioActual < servicios.length - 1) {
-        actualizarServicio(servicioActual + 1);
-      } else if (diffX < 0 && servicioActual > 0) {
-        actualizarServicio(servicioActual - 1);
-      }
-    }
-  });
-
-  // Inicializa con el primer servicio seleccionado
-  actualizarServicio(0);
-
-  // Código para efecto ripple en botones (elegant-btn)
-  const buttons = document.querySelectorAll('.elegant-btn');
-  
-  buttons.forEach(button => {
-    button.addEventListener('click', function(e) {
-      let rect = button.getBoundingClientRect();
-      let x = e.clientX - rect.left;
-      let y = e.clientY - rect.top;
-      
-      let ripple = document.createElement('span');
-      ripple.style.left = x + 'px';
-      ripple.style.top = y + 'px';
-      ripple.classList.add('ripple-effect');
-      
-      this.appendChild(ripple);
-      
-      setTimeout(() => {
-        ripple.remove();
-      }, 600);
-    });
-  });
-});
 </script>
