@@ -38,6 +38,11 @@
     color: #fff !important;
     font-weight: bold !important;
   }
+  
+    .boton-servicio:hover .Title-Boton-servicio {
+    color: #fff !important;
+    font-weight: bold !important;
+  }
 
   /* (Opcional) Si quieres usar una clase activa adicional en el texto */
   .Title-Boton-servicio-activo {
@@ -68,7 +73,81 @@
     font-weight: bold;
     list-style-type: disc;
   }
-</style>
+  .systems-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    padding: 20px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    max-width: 800px;
+    margin: 0 auto;
+  }
 
+  .system-card {
+    display: flex;
+    align-items: flex-start; /* Alineación superior */
+    padding: 14px 18px;
+    background: #F9FAFB;
+    border-radius: 8px;
+    border: 1px solid #E5E7EB;
+    transition: all 0.25s ease;
+    min-height: 56px;
+  }
 
+  .system-card:hover {
+    border-color: #F37023;
+    background: #FFF7F2;
+  }
+
+  .system-bullet {
+    width: 16px;
+    height: 16px;
+    margin: 2px 14px 0 0; /* Margen superior compensado */
+    background: #F37023;
+    border-radius: 4px;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .system-bullet::after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 1px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .system-label {
+    color: #1A1D26;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    text-align: left; /* Alineación forzada */
+    width: 100%; /* Ocupa todo el espacio disponible */
+    padding-right: 10px; /* Previene desbordamiento */
+  }
+
+  @media (max-width: 768px) {
+    .systems-grid {
+      grid-template-columns: 1fr;
+      padding: 16px;
+      gap: 12px;
+    }
+    
+    .system-card {
+      padding: 12px 16px;
+      min-height: 48px;
+    }
+    
+    .system-bullet {
+      margin-top: 3px; /* Compensación móvil */
+    }
+  }
 </style>
