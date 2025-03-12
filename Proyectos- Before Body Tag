@@ -1,4 +1,3 @@
-<!-- Código para Before </body> Tag ACTUALIZADO -->
 <style>
   /* ----------------------------------
     Estilos base del mapa (TUS ORIGINALES)
@@ -17,46 +16,67 @@
     height: 80vh !important;
   }
 
-  /* Overlay de instrucciones (TUS ORIGINALES) */
-  .zoom-instruction {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.2);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    pointer-events: none;
-    user-select: none;
-    border-radius: inherit;
-    box-sizing: border-box;
+  /* 🔥 RESET DEFAULT MAPBOX POPUP STYLES */
+  .mapboxgl-popup-content {
+    background: unset !important;
+    border-radius: unset !important;
+    box-shadow: unset !important;
+    padding: unset !important;
+    pointer-events: auto;
+    position: relative;
   }
 
-  .zoom-instruction span {
-    color: white;
-    font-family: Arial, sans-serif;
-    font-size: 18px;
-    text-align: center;
-    line-height: 1.4;
-    max-width: 80%;
+  /* 🔥 Remueve la flecha del popup */
+  .mapboxgl-popup-tip {
+    display: none !important;
+  }
+
+  /* 🔥 Estiliza el popup */
+  .popup-content {
+    background: white;
     padding: 15px;
-    background: rgba(0,0,0,0.7);
     border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
   }
 
-  @media (max-width: 767px) {
-    .zoom-instruction span {
-      font-size: 16px;
-      padding: 12px;
-    }
+  .popup-content h3 {
+    font-size: 18px;
+    color: #2C3E50;
+    margin-bottom: 12px;
+  }
+
+  .popup-content img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+
+  .popup-content p {
+    font-size: 14px;
+    color: #555555;
+    margin-bottom: 16px;
+  }
+
+  .popup-button {
+    display: block;
+    padding: 10px 20px;
+    background: #F37023;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: background 0.3s ease;
+    width: fit-content;
+    margin: 0 auto;
+  }
+
+  .popup-button:hover {
+    background-color: #F24A22;
   }
 </style>
-
-<script src="https://api.tiles.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.js"></script>
-<link href="https://api.tiles.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css" rel="stylesheet">
 
 <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.js"></script>
 <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css" rel="stylesheet">
@@ -77,71 +97,92 @@
       cooperativeGestures: true,
     });
 
-    // Activar scroll zoom para dispositivos sin pantalla táctil
     if (!isTouchDevice) {
       map.scrollZoom.enable();
     }
 
-    // Redimensionar mapa cuando se ajusta la ventana
     window.addEventListener('resize', () => map.resize());
 
-    // Referencia al recuadro de información
     const cityBox = document.getElementById('city-info');
     const cityNameElement = cityBox.querySelector('.city-name');
 
-    // 🔥 Estilo para apilar "Seleccionar" encima de "Proyecto"
     cityNameElement.style.display = 'flex';
     cityNameElement.style.flexDirection = 'column';
     cityNameElement.style.alignItems = 'center';
     cityNameElement.style.justifyContent = 'center';
     cityNameElement.style.textAlign = 'center';
 
-    // 🔥 Texto inicial fijo
     cityNameElement.innerHTML = "<span>Seleccionar</span><span>Proyecto</span>";
 
+    let popup = new mapboxgl.Popup({
+      closeButton: true,
+      closeOnClick: false,
+      anchor: "bottom",
+    });
+
     map.on('load', () => {
-      // Evento para mostrar popups al hacer clic en los puntos del mapa
       map.on('click', 'idelcom-projects', (event) => {
         const features = map.queryRenderedFeatures(event.point, { layers: ['idelcom-projects'] });
         if (!features.length) return;
 
         const feature = features[0];
 
-        // 🔥 Cambia el texto del recuadro al seleccionar un proyecto
-        cityNameElement.textContent = feature.properties.city || "Seleccionar Proyecto";
         cityNameElement.innerHTML = `<span>${feature.properties.city || "Seleccionar"}</span><span>${feature.properties.city ? "" : "Proyecto"}</span>`;
 
-        // Mostrar popup con diseño personalizado
-        new mapboxgl.Popup({ offset: [0, -35], closeButton: true })
+        // 🔥 Ajuste del rabillo del popup
+        const popupOffset = {
+          top: [0, 10],  
+          bottom: [0, -10], 
+          left: [10, 0],  
+          right: [-10, 0]
+        };
+
+        // 🔥 Si el popup ya está abierto, se cierra al hacer clic fuera de él
+        if (popup.isOpen) {
+          popup.remove();
+        }
+
+        // 🔥 Mostrar el popup dinámico con animación
+        popup
           .setLngLat(feature.geometry.coordinates)
           .setHTML(
             `<div class="popup-content">
               <h3>${feature.properties.name}</h3>
               ${feature.properties.imagen_url ? `<img src="${feature.properties.imagen_url}" alt="${feature.properties.name}" style="width: 100%; height: auto;">` : ''}
               <p>${feature.properties.description}</p>
-              ${feature.properties.enlace_proyecto ? `<a href="${feature.properties.enlace_proyecto}" class="popup-button" target="_blank" style="color: #007BFF; text-decoration: none; font-weight: bold;">Ver Proyecto</a>` : ''}
+              ${feature.properties.enlace_proyecto ? `<a href="${feature.properties.enlace_proyecto}" class="popup-button" target="_blank">Ver Proyecto</a>` : ''}
             </div>`
           )
+          .setOffset(popupOffset)
           .addTo(map);
+
+        // 🔥 Seguir el desplazamiento con el popup en móviles
+        if (isTouchDevice) {
+          map.flyTo({
+            center: feature.geometry.coordinates,
+            zoom: 6,
+            speed: 0.7,
+          });
+        }
       });
 
-      // Cambiar el cursor al pasar sobre los puntos
+      // 🔥 Restaurar el cursor cuando el mouse salga del punto
       map.on('mouseenter', 'idelcom-projects', () => {
         map.getCanvas().style.cursor = 'pointer';
       });
 
-      // Restaurar el cursor al salir de los puntos
       map.on('mouseleave', 'idelcom-projects', () => {
         map.getCanvas().style.cursor = '';
       });
-    });
 
-    // Evento para restablecer el texto del recuadro cuando se haga clic fuera de un proyecto
-    map.on('click', (event) => {
-      const features = map.queryRenderedFeatures(event.point, { layers: ['idelcom-projects'] });
-      if (!features.length) {
-        cityNameElement.innerHTML = "<span>Seleccionar</span><span>Proyecto</span>";
-      }
+      // 🔥 Cerrar popup si se hace clic fuera en la pantalla
+      map.on('click', (event) => {
+        const features = map.queryRenderedFeatures(event.point, { layers: ['idelcom-projects'] });
+        if (!features.length) {
+          cityNameElement.innerHTML = "<span>Seleccionar</span><span>Proyecto</span>";
+          popup.remove(); // 🔥 Cierra el popup cuando se haga clic fuera
+        }
+      });
     });
   });
 </script>
