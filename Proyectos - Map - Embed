@@ -134,27 +134,16 @@
   }
 
   /* CÍRCULO */
-  .city-donut {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #F37023;
-    position: relative;
-    flex-shrink: 0;
-  }
+/* CÍRCULO */
+.city-donut {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 4px solid #F37023; /* Borde en lugar de background */
+  background: transparent; /* Fondo completamente transparente */
+  flex-shrink: 0;
+}
 
-  .city-donut::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50%;
-    height: 50%;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
 
   /* TEXTO SELECCIONAR PROYECTO */
   .city-name {
