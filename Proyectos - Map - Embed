@@ -52,12 +52,12 @@
 
   @media (max-width: 767px) {
     #map {
-      height: 70vh !important;
-    }
-
-    .mapboxgl-popup-content {
-      width: 80vw !important;
-    }
+    height: calc(100 * var(--vh, 1vh)) !important; /* Nueva medida */
+  }
+  
+  .map-container {
+    height: calc(100 * var(--vh, 1vh)) !important;
+  }
   }
 
   /* ========= ACTUALIZACIÓN: SE AMOLDA DINÁMICAMENTE ========= */
