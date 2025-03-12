@@ -82,6 +82,14 @@
 <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css" rel="stylesheet">
 
 <script>
+  function fixViewport() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+  
+  window.addEventListener('resize', fixViewport);
+  fixViewport(); // Ejecutar al cargar
+
   document.addEventListener("DOMContentLoaded", function () {
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
@@ -129,7 +137,6 @@
 
         cityNameElement.innerHTML = `<span>${feature.properties.city || "Seleccionar"}</span><span>${feature.properties.city ? "" : "Proyecto"}</span>`;
 
-        // 🔥 Ajuste del rabillo del popup
         const popupOffset = {
           top: [0, 10],  
           bottom: [0, -10], 
@@ -137,12 +144,10 @@
           right: [-10, 0]
         };
 
-        // 🔥 Si el popup ya está abierto, se cierra al hacer clic fuera de él
         if (popup.isOpen) {
           popup.remove();
         }
 
-        // 🔥 Mostrar el popup dinámico con animación
         popup
           .setLngLat(feature.geometry.coordinates)
           .setHTML(
@@ -156,7 +161,6 @@
           .setOffset(popupOffset)
           .addTo(map);
 
-        // 🔥 Seguir el desplazamiento con el popup en móviles
         if (isTouchDevice) {
           map.flyTo({
             center: feature.geometry.coordinates,
@@ -166,7 +170,6 @@
         }
       });
 
-      // 🔥 Restaurar el cursor cuando el mouse salga del punto
       map.on('mouseenter', 'idelcom-projects', () => {
         map.getCanvas().style.cursor = 'pointer';
       });
@@ -175,12 +178,11 @@
         map.getCanvas().style.cursor = '';
       });
 
-      // 🔥 Cerrar popup si se hace clic fuera en la pantalla
       map.on('click', (event) => {
         const features = map.queryRenderedFeatures(event.point, { layers: ['idelcom-projects'] });
         if (!features.length) {
           cityNameElement.innerHTML = "<span>Seleccionar</span><span>Proyecto</span>";
-          popup.remove(); // 🔥 Cierra el popup cuando se haga clic fuera
+          popup.remove();
         }
       });
     });
