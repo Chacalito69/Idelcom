@@ -1,5 +1,5 @@
+<!-- BEFORE BODY END TAG -->
 <style>
-/* MODAL PERFECTAMENTE CENTRADO */
 .seccion-play-video-modal {
     position: fixed;
     top: 50%;
