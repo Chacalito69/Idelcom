@@ -1,12 +1,12 @@
 <!-- EMBED HEAD -->
 <style>
-.seccion-play-video {
+  .seccion-play-video {
     --spv-primary: #F37023;
     --spv-hover: #F24A22;
-    --spv-transition: 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-}
+    --spv-transition: 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
 
-.seccion-play-video__container {
+  .seccion-play-video__container {
     position: relative;
     display: flex;
     align-items: center;
@@ -19,22 +19,22 @@
     width: 100%;
     transition: var(--spv-transition);
     background: transparent;
-    z-index: 1; /* Nuevo añadido */
-}
+    z-index: 1;
+  }
 
-.seccion-play-video__button {
+  .seccion-play-video__button {
     width: 72px;
     height: 72px;
     border-radius: 50%;
     background: var(--spv-primary);
     display: grid;
     place-items: center;
-    transition: transform 0.4s ease-out;
+    transition: transform 0.6s ease;
     position: relative;
     flex-shrink: 0;
-}
+  }
 
-.seccion-play-video__button::after {
+  .seccion-play-video__button::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -42,120 +42,127 @@
     border-radius: 50%;
     animation: pulse-enhanced 1.8s infinite;
     opacity: 0.8;
-}
+  }
 
-@keyframes pulse-enhanced {
+  @keyframes pulse-enhanced {
     0% { box-shadow: 0 0 0 0 rgba(243, 112, 35, 0.5); }
     100% { box-shadow: 0 0 0 24px rgba(243, 112, 35, 0); }
-}
+  }
 
-.seccion-play-video__icon {
+  .seccion-play-video__icon {
     width: 32px;
     height: 32px;
     fill: white;
-    transition: transform 0.3s ease-out;
-}
+    transition: transform 0.6s ease;
+  }
 
-.seccion-play-video__content {
+  .seccion-play-video__content {
     flex-grow: 1;
     min-width: 0;
     overflow: hidden;
-    position: relative; /* Nuevo añadido */
-}
+    position: relative;
+  }
 
-.seccion-play-video__title {
-    font: 600 1.75rem/1.2 'Inter', sans-serif;
+  /* Nuevos estilos para título y duración con transiciones suaves */
+  .seccion-play-video__title {
+    font: 600 1.85rem/1.15 'Inter', sans-serif;
     color: #fff;
-    margin-bottom: 0.75rem;
-    white-space: nowrap;
-    transition: transform 0.5s var(--spv-transition), opacity 0.3s ease-out;
-    position: relative; /* Corrección clave */
-}
+    margin-bottom: 0.15rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 4px;
+    transition: transform 0.8s ease, opacity 0.8s ease;
+  }
 
-.seccion-play-video__title::after {
+  .seccion-play-video__title::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: 0;
     left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--spv-primary);
-    transition: width 0.5s var(--spv-transition);
-}
+    width: 48px;
+    height: 1px;
+    background: rgba(255,255,255,0.3);
+    transition: width 0.8s ease;
+  }
 
-.seccion-play-video__duration {
-    font: 400 1.125rem/1.4 'Inter', sans-serif;
-    color: rgba(255,255,255,0.9);
-    transition: transform 0.5s var(--spv-transition), opacity 0.3s ease-out;
-}
+  .seccion-play-video__duration {
+    font: 400 0.95rem/1.6 'Inter', sans-serif;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.03em;
+    font-variant: small-caps;
+    transition: transform 0.8s ease, opacity 0.8s ease;
+  }
 
-.seccion-play-video__container:hover {
+  /* Efectos hover */
+  .seccion-play-video__container:hover {
     transform: translateY(-2px);
-}
+  }
 
-.seccion-play-video__container:hover .seccion-play-video__button {
+  .seccion-play-video__container:hover .seccion-play-video__button {
     background: var(--spv-hover);
     transform: scale(1.08);
     box-shadow: 0 12px 32px rgba(242, 74, 34, 0.4);
-}
+  }
 
-.seccion-play-video__container:hover .seccion-play-video__title {
+  .seccion-play-video__container:hover .seccion-play-video__title {
     transform: translateX(10px);
     opacity: 0.9;
-}
+  }
 
-.seccion-play-video__container:hover .seccion-play-video__title::after {
-    width: 40%;
-}
+  .seccion-play-video__container:hover .seccion-play-video__title::after {
+    width: 72px;
+    background: linear-gradient(90deg, var(--spv-primary) 0%, rgba(255,255,255,0.3) 100%);
+  }
 
-.seccion-play-video__container:hover .seccion-play-video__duration {
+  .seccion-play-video__container:hover .seccion-play-video__duration {
     transform: translateX(6px);
     opacity: 0.9;
-}
+  }
 
-.seccion-play-video__container:hover .seccion-play-video__icon {
+  .seccion-play-video__container:hover .seccion-play-video__icon {
     transform: scale(1.15);
-}
+  }
 
-@media (max-width: 768px) {
+  @media (max-width: 768px) {
     .seccion-play-video__container {
-        padding: 1.5rem;
-        gap: 1.5rem;
-        max-width: 95%;
+      padding: 1.5rem;
+      gap: 1.5rem;
+      max-width: 95%;
     }
     
     .seccion-play-video__button {
-        width: 64px;
-        height: 64px;
+      width: 64px;
+      height: 64px;
     }
     
     .seccion-play-video__title {
-        font-size: 1.5rem;
-        white-space: normal;
+      font-size: 1.5rem;
+      white-space: normal;
     }
     
     .seccion-play-video__duration {
-        font-size: 1rem;
-        margin-top: 6px;
+      font-size: 1rem;
+      margin-top: 6px;
     }
     
     .seccion-play-video__icon {
-        width: 28px;
-        height: 28px;
+      width: 28px;
+      height: 28px;
     }
-}
+  }
 </style>
 
 <div class="seccion-play-video">
-    <div class="seccion-play-video__container">
-        <div class="seccion-play-video__button">
-            <svg class="seccion-play-video__icon" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-            </svg>
-        </div>
-        <div class="seccion-play-video__content">
-            <div class="seccion-play-video__title">Somos IDELCOM</div>
-            <div class="seccion-play-video__duration">Mira el video (2:45)</div>
-        </div>
+  <div class="seccion-play-video__container">
+    <div class="seccion-play-video__button">
+      <svg class="seccion-play-video__icon" viewBox="0 0 24 24">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
     </div>
+    <div class="seccion-play-video__content">
+      <div class="seccion-play-video__title">Somos IDELCOM</div>
+      <div class="seccion-play-video__duration">Mira el video (2:45)</div>
+    </div>
+  </div>
 </div>
