@@ -1,6 +1,8 @@
 <!-- BEFORE BODY END TAG -->
+
+<!-- Estilos para el Modal del video -->
 <style>
-.seccion-play-video-modal {
+  .seccion-play-video-modal {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -14,15 +16,15 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10000;
     box-shadow: 0 32px 64px rgba(0,0,0,0.4);
-}
+  }
 
-.seccion-play-video-modal.active {
+  .seccion-play-video-modal.active {
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, -50%) scale(1);
-}
+  }
 
-.seccion-play-video-overlay {
+  .seccion-play-video-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -34,9 +36,9 @@
     visibility: hidden;
     transition: opacity 0.3s ease;
     z-index: 9999;
-}
+  }
 
-.seccion-play-video__close {
+  .seccion-play-video__close {
     position: absolute;
     top: 24px;
     right: 24px;
@@ -49,60 +51,147 @@
     place-items: center;
     cursor: pointer;
     transition: all 0.3s ease;
-}
+  }
 
-.seccion-play-video__close:hover {
+  .seccion-play-video__close:hover {
     background: rgba(255,255,255,0.2);
     transform: rotate(90deg);
-}
+  }
 
-.seccion-play-video__iframe {
+  .seccion-play-video__iframe {
     width: 100%;
     height: 100%;
     border: none;
     border-radius: 16px;
-}
+  }
 
-@media (max-width: 768px) {
+  @media (max-width: 768px) {
     .seccion-play-video__close {
-        top: 16px;
-        right: 16px;
-        width: 32px;
-        height: 32px;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
     }
-}
+  }
 </style>
 
+<!-- Marcado del Modal -->
 <div class="seccion-play-video-overlay"></div>
 <div class="seccion-play-video-modal">
-    <button class="seccion-play-video__close">
-        <svg class="seccion-play-video__close-icon" viewBox="0 0 24 24">
-            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-        </svg>
-    </button>
-    <iframe class="seccion-play-video__iframe" 
-            src="" 
-            allow="autoplay; fullscreen" 
-            frameborder="0"
-            allowfullscreen></iframe>
+  <button class="seccion-play-video__close">
+    <svg class="seccion-play-video__close-icon" viewBox="0 0 24 24">
+      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+    </svg>
+  </button>
+  <iframe class="seccion-play-video__iframe" 
+          src="" 
+          allow="autoplay; fullscreen" 
+          frameborder="0"
+          allowfullscreen></iframe>
 </div>
 
+<!-- Script del Carousel -->
 <script>
-document.querySelector('.seccion-play-video__container').addEventListener('click', () => {
-    const modal = document.querySelector('.seccion-play-video-modal');
-    const overlay = document.querySelector('.seccion-play-video-overlay');
-    const iframe = document.querySelector('.seccion-play-video__iframe');
-    
-    iframe.src = 'https://player.vimeo.com/video/82481183?autoplay=1&title=0&byline=0&portrait=0&quality=1080p';
-    modal.classList.add('active');
-    overlay.classList.add('active');
-});
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.querySelector('.idt-container');
+  if (container) {
+    const carousel = container.querySelector('.idt-carousel');
+    const cards = container.querySelectorAll('.idt-card');
+    const prevBtn = container.querySelector('.prev');
+    const nextBtn = container.querySelector('.next');
+    const progress = container.querySelector('.idt-progress');
+    let currentIndex = 0;
 
-document.querySelectorAll('.seccion-play-video-overlay, .seccion-play-video__close').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelector('.seccion-play-video-modal').classList.remove('active');
-        document.querySelector('.seccion-play-video-overlay').classList.remove('active');
-        document.querySelector('.seccion-play-video__iframe').src = '';
+    // Inicializar progreso
+    cards.forEach((_, index) => {
+      const dot = document.createElement('div');
+      dot.className = `idt-progress-item ${index === 0 ? 'active' : ''}`;
+      progress.appendChild(dot);
     });
+
+    // Actualizar estado
+    const updateState = () => {
+      container.querySelectorAll('.idt-progress-item').forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === cards.length - 1;
+    };
+
+    // Scroll a la tarjeta
+    const scrollToCard = (index) => {
+      currentIndex = Math.max(0, Math.min(index, cards.length - 1));
+      const card = cards[currentIndex];
+      const containerWidth = carousel.offsetWidth;
+      const scrollPos = card.offsetLeft - (containerWidth - card.offsetWidth) / 2;
+      
+      carousel.scrollTo({
+        left: scrollPos,
+        behavior: 'smooth'
+      });
+      
+      updateState();
+    };
+
+    // Event listeners
+    prevBtn.addEventListener('click', () => scrollToCard(currentIndex - 1));
+    nextBtn.addEventListener('click', () => scrollToCard(currentIndex + 1));
+
+    // Gestos táctiles
+    let touchStartX = 0;
+    carousel.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+    });
+
+    carousel.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].clientX;
+      const delta = touchStartX - touchEndX;
+      if (Math.abs(delta) > 50) {
+        delta > 0 ? scrollToCard(currentIndex + 1) : scrollToCard(currentIndex - 1);
+      }
+    });
+
+    // Observer para animaciones
+    new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.25 }).observe(carousel);
+
+    // Detección de scroll
+    carousel.addEventListener('scroll', () => {
+      const newIndex = Math.round(carousel.scrollLeft / (carousel.scrollWidth / cards.length));
+      if (newIndex !== currentIndex) {
+        currentIndex = newIndex;
+        updateState();
+      }
+    });
+  }
+});
+</script>
+
+<!-- Script del Modal del video -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const videoContainer = document.querySelector('.seccion-play-video__container');
+  const modal = document.querySelector('.seccion-play-video-modal');
+  const overlay = document.querySelector('.seccion-play-video-overlay');
+  const iframe = document.querySelector('.seccion-play-video__iframe');
+  
+  if (videoContainer) {
+    videoContainer.addEventListener('click', () => {
+      iframe.src = 'https://player.vimeo.com/video/82481183?autoplay=1&title=0&byline=0&portrait=0&quality=1080p';
+      modal.classList.add('active');
+      overlay.classList.add('active');
+    });
+  }
+  
+  document.querySelectorAll('.seccion-play-video-overlay, .seccion-play-video__close').forEach(btn => {
+    btn.addEventListener('click', () => {
+      modal.classList.remove('active');
+      overlay.classList.remove('active');
+      iframe.src = '';
+    });
+  });
 });
 </script>
